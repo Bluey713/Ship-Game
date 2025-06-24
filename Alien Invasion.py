@@ -7,7 +7,7 @@ When the game begins a fleet of aliens appears."""
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior"""
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialized the game, and create game resources"""
         pygame.init()
 
