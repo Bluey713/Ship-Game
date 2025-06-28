@@ -11,14 +11,14 @@ class AlienInvasion:
     """Overall class to manage game assets and behavior"""
     def __init__(self) -> None:
         """Initialized the game, and create game resources"""
-        pygame.init()   #initialized all imporated modules instead of initializing each one we use
+        pygame.init()   #initialized all imported modules instead of initializing each one we use
         self.clock = pygame.time.Clock()    #Creates an object to help track time; which we'll then use to track fps
-        self.settings = Settings()  #we can now call the self.settings.whatever_method_is_in_Settings.
+        self.settings = Settings()  #here we initialize the Settings module by calling it self.settings.whatever_method_is_in_Settings.
 
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height)) #returns a "surface" = screen. see documentation
         pygame.display.set_caption("Alien Invasion")    #sets the title on the open window
 
-        self.ship = Ship(self)
+        self.ship = Ship(self) #After crating the ship module, initialized the ship and by giving the "self" argument, the ship module has access to everything
 
         #Set the background color.
         # self.bg_color = (200, 200, 200)   #commented this out for now since it seems like its not doing anything
