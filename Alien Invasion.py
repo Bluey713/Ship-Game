@@ -27,13 +27,7 @@ class AlienInvasion:
         """Start the main loop for the game"""
         while True:
             self._check_events()
-
-            #Redraw the screen during each pass through the loop.
-            self.screen.fill(self.settings.bg_color)
-            self.ship.blitme()
-
-            #Make the most recently drawn screen visible.
-            pygame.display.flip()   #refreshes the screen. documentation unclear maybe ask grok
+            self._update_screen()
             self.clock.tick(60)     #sets the frame rate to 60 frames per "tick" = second.
 
     def _check_events(self):    #This is a "helper method". This works inside a class but isn't meant to be used outside the class. Helper methods begin with "_"
@@ -43,6 +37,16 @@ class AlienInvasion:
         for event in pygame.event.get():  # an event is any keyboard action or mouse click.
             if event.type == pygame.QUIT:  # clicking on the x button is an event of QUIT.
                 sys.exit()
+
+    def _update_screen(self):
+        """Update images on the screen, and flip to the new screen."""
+        # Redraw the screen during each pass through the loop.
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+
+        # Make the most recently drawn screen visible.
+        pygame.display.flip()  # refreshes the screen. documentation unclear maybe ask grok
+
 
 
 ai = AlienInvasion()    #initialize "ai" as our game
