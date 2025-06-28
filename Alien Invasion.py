@@ -37,6 +37,12 @@ class AlienInvasion:
         for event in pygame.event.get():  # an event is any keyboard action or mouse click.
             if event.type == pygame.QUIT:  # clicking on the x button is an event of QUIT.
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:  #Each keystroke is registered as a keydown event by pycharm
+                if event.key == pygame.K_RIGHT: #K_RIGHT is the right arrow key.
+                    #Move the ship to the right by one pixel
+                    self.ship.rect.x += 10
+                elif event.key == pygame.K_LEFT:
+                    self.ship.rect.x += -10
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
