@@ -15,7 +15,11 @@ class AlienInvasion:
         self.clock = pygame.time.Clock()    #Creates an object to help track time; which we'll then use to track fps
         self.settings = Settings()  #here we initialize the Settings module by calling it self.settings.whatever_method_is_in_Settings.
 
-        self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height)) #returns a "surface" = screen. see documentation
+        # self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height)) #returns a "surface" = screen. see documentation
+
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)  # This allows the game to go into full screen. or you can use the above
+        self.settings.screen_width = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")    #sets the title on the open window
 
         self.ship = Ship(self) #After crating the ship module, initialized the ship and by giving the "self" argument, the ship module has access to everything
