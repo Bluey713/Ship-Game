@@ -3,7 +3,7 @@ import pygame
 from settings import Settings       #This is importing the module we created
 from ship import Ship
 
-"""The player controsl a rocket ship that appears on the bottom center of the screen.
+"""The player controls a rocket ship that appears on the bottom center of the screen.
 The player can move the ship left and right and shoots bullets with the space bar.
 When the game begins a fleet of aliens appears."""
 
@@ -49,9 +49,6 @@ class AlienInvasion:
                     self.ship.moving_right = False
                 elif event.key == pygame.K_LEFT:
                     self.ship.moving_left = False
-
-
-
 
 
     def _update_screen(self):
