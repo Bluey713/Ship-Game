@@ -59,9 +59,9 @@ class AlienInvasion:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
-        elif event.key == pygame.K_q:   #Added the exit function to also include the letter "q"
+        elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:   #Added the exit function to also include the letter "q". I added escape
             sys.exit()
-        elif event.type == pygame.K_SPACE:
+        elif event.key == pygame.K_SPACE:
             self._fire_bullet()
 
     def _check_keyup_events(self, event):
