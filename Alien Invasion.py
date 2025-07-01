@@ -34,15 +34,11 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()  #This is what updates the shift to move. it takes in the input by the above method if any is true, the ship moves
-            self.bullets.update()
+            self._update_bullets()
             self._update_screen()
             self.clock.tick(60)     #sets the frame rate to 60 frames per "tick" = second.
 
-            #Get rid of bullets that have disappeared.
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
-            print(len(self.bullets))
+
 
     def _check_events(self):    #This is a "helper method". This works inside a class but isn't meant to be used outside the class. Helper methods begin with "_"
         """Respond to keypresses and mouse events."""
@@ -82,6 +78,17 @@ class AlienInvasion:
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+
+    def _update_bullets(self):
+        """Update """
+        #Update position of bullets and get rid of old bullets.
+        self.bullets.update()
+
+        # Get rid of bullets that have disappeared.
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+
 
 
     def _update_screen(self):
