@@ -7,6 +7,7 @@ class Settings:
         self.screen_width = 1200        #We are using this to be able to easily change settings by calling this method instead of manually having to change each instance
         self.screen_height = 800
         self.bg_color = (230, 230, 230)
+        self.bullets_allowed = 3  # Limits the number of bullets allowed on screen to 3
 
         #Ship settings
         self.ship_speed = 10.5
