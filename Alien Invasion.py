@@ -2,6 +2,7 @@ import sys
 import pygame
 from settings import Settings       #This is importing the module we created
 from ship import Ship
+from bullet import Bullet
 
 """The player controls a rocket ship that appears on the bottom center of the screen.
 The player can move the ship left and right and shoots bullets with the space bar.
@@ -23,6 +24,7 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")    #sets the title on the open window
 
         self.ship = Ship(self) #After crating the ship module, initialized the ship and by giving the "self" argument, the ship module has access to everything
+        self.bullets = pygame.sprite.Group()
 
         #Set the background color.
         # self.bg_color = (200, 200, 200)   #commented this out for now since it seems like its not doing anything
@@ -32,6 +34,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()  #This is what updates the shift to move. it takes in the input by the above method if any is true, the ship moves
+            self.bullets.update()
             self._update_screen()
             self.clock.tick(60)     #sets the frame rate to 60 frames per "tick" = second.
 
@@ -48,6 +51,7 @@ class AlienInvasion:
                 self._check_keyup_events(event)
 
 
+
     def _check_keydown_events(self, event):
         """Respond to keypresses."""
         if event.key == pygame.K_RIGHT:  # K_RIGHT is the right arrow key.
@@ -57,6 +61,8 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:   #Added the exit function to also include the letter "q"
             sys.exit()
+        elif event.type == pygame.K_SPACE:
+            self._fire_bullet()
 
     def _check_keyup_events(self, event):
         """Respond to key releases."""
@@ -65,11 +71,18 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
+    def _fire_bullet(self):
+        """Create a new bullet and add it to the bullets group."""
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
+
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
         # Redraw the screen during each pass through the loop.
         self.screen.fill(self.settings.bg_color)
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
         self.ship.blitme()
 
         # Make the most recently drawn screen visible.
