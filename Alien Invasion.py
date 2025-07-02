@@ -3,6 +3,7 @@ import pygame
 from settings import Settings       #This is importing the module we created
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 """The player controls a rocket ship that appears on the bottom center of the screen.
 The player can move the ship left and right and shoots bullets with the space bar.
@@ -25,9 +26,13 @@ class AlienInvasion:
 
         self.ship = Ship(self) #After crating the ship module, initialized the ship and by giving the "self" argument, the ship module has access to everything
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+
+        self._create_fleet()
+
 
         #Set the background color.
-        # self.bg_color = (200, 200, 200)   #commented this out for now since it seems like its not doing anything
+        # self.bg_color = (200, 200, 200)   #commented this out for now since it seems like its not doing anything and i think it was deleted once we created the settings
 
     def run_game(self):
         """Start the main loop for the game"""
@@ -51,7 +56,6 @@ class AlienInvasion:
                 self._check_keydown_events(event)   #Here we just give it the event since we've already checked the type to make sure its correct.
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
-
 
 
     def _check_keydown_events(self, event):
@@ -89,6 +93,11 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+    def _create_fleet(self):
+        """Create the fleet of aliens."""
+        # Make an alien.
+        alien = Alien(self)
+        self.aliens.add(alien)
 
 
     def _update_screen(self):
@@ -98,6 +107,7 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.ship.blitme()
+        self.aliens.draw(self.screen)   #create the image of the alien on the screen
 
         # Make the most recently drawn screen visible.
         pygame.display.flip()  # refreshes the screen. documentation unclear maybe ask grok
