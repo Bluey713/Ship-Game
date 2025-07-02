@@ -40,6 +40,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()  #This is what updates the shift to move. it takes in the input by the above method if any is true, the ship moves
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
             self.clock.tick(60)     #sets the frame rate to 60 frames per "tick" = second.
 
@@ -111,6 +112,18 @@ class AlienInvasion:
             current_x = alien_width
             current_y += 2 * alien_height
 
+    def _check_fleet_edges(self):
+        """Respond appropriately if any aliens have reached an edge."""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        """Drop the entrie fleet and change the fleet's direction."""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
 
     def _create_alien(self, x_position, y_position):
         """Create an alien and place it in the row."""
@@ -120,7 +133,10 @@ class AlienInvasion:
         new_alien.rect.y = y_position
         self.aliens.add(new_alien)
 
-
+    def _update_aliens(self):
+        """Check if the fleet is at an edge, then update positions."""
+        self._check_fleet_edges()
+        self.aliens.update()
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
