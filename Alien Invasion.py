@@ -48,11 +48,15 @@ class AlienInvasion:
         """Start the main loop for the game"""
         while True:
             self._check_events()
-            self.ship.update()  #This is what updates the shift to move. it takes in the input by the above method if any is true, the ship moves
-            self._update_bullets()
-            self._update_aliens()
+
+            if self.game_active:
+                self.ship.update()  #This is what updates the shift to move. it takes in the input by the above method if any is true, the ship moves
+                self._update_bullets()
+                self._update_aliens()
+
             self._update_screen()
-            self.clock.tick(60)     #sets the frame rate to 60 frames per "tick" = second.
+            self.clock.tick(60)  # sets the frame rate to 60 frames per "tick" = second.
+
 
 
 
