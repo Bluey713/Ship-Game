@@ -1,9 +1,14 @@
 import sys
+from time import sleep
+
 import pygame
+
 from settings import Settings       #This is importing the module we created
+from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
+
 
 """The player controls a rocket ship that appears on the bottom center of the screen.
 The player can move the ship left and right and shoots bullets with the space bar.
@@ -23,6 +28,9 @@ class AlienInvasion:
         # self.settings.screen_width = self.screen.get_rect().width
         # self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")    #sets the title on the open window
+
+        #Create an instance to store game statistics
+        self.stats = GameStats(self)
 
         self.ship = Ship(self) #After crating the ship module, initialized the ship and by giving the "self" argument, the ship module has access to everything
         self.bullets = pygame.sprite.Group()
@@ -154,7 +162,23 @@ class AlienInvasion:
 
         #Look for alien-ship collisions.
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
-            print("Ship Hit!!!")
+            self._ship_hit()
+
+    def _ship_hit(self):
+        """Respond to the ship being hit by an alien."""
+        # Decrement ships left.
+        self.stats.ships_left -= 1
+
+        # Get rid of any remaining bullets and aliens.
+        self.bullets.empty()
+        self.aliens.empty()
+
+        # Create a new fleet and center the ship
+        self._create_fleet()
+        self.ship.center_ship()
+
+        #Pause
+        sleep(1.0)
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
@@ -167,6 +191,8 @@ class AlienInvasion:
 
         # Make the most recently drawn screen visible.
         pygame.display.flip()  # refreshes the screen. documentation unclear maybe ask grok
+
+
 
 
 
