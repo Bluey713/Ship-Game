@@ -38,6 +38,8 @@ class AlienInvasion:
 
         self._create_fleet()
 
+        self.game_active = True
+
 
         #Set the background color.
         # self.bg_color = (200, 200, 200)   #commented this out for now since it seems like its not doing anything and i think it was deleted once we created the settings
@@ -164,21 +166,37 @@ class AlienInvasion:
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self._ship_hit()
 
+        #Look for aliens hitting the bottom of the screen
+        self._check_aliens_bottom()
+
+
+    def _check_aliens_bottom(self):
+        """Check if any aliens have reached the bottom of the screen."""
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= self.settings.screen_height:
+                #Treat this the same as if the ship got hit. if you make a hole and an alien gets through, the game ends
+                self._ship_hit()
+                break
+
+
     def _ship_hit(self):
         """Respond to the ship being hit by an alien."""
-        # Decrement ships left.
-        self.stats.ships_left -= 1
+        if self.stats.ships_left > 0
+            # Decrement ships left.
+            self.stats.ships_left -= 1
 
-        # Get rid of any remaining bullets and aliens.
-        self.bullets.empty()
-        self.aliens.empty()
+            # Get rid of any remaining bullets and aliens.
+            self.bullets.empty()
+            self.aliens.empty()
 
-        # Create a new fleet and center the ship
-        self._create_fleet()
-        self.ship.center_ship()
+            # Create a new fleet and center the ship
+            self._create_fleet()
+            self.ship.center_ship()
 
-        #Pause
-        sleep(1.0)
+            #Pause
+            sleep(1.0)
+        else:
+            self.game_active = False
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
